@@ -1,0 +1,5 @@
+- how to sort the border page:
+- import the current json details from the parent component and 
+- fetch another API that gets data for bordering countreis 
+- checks if they have the same bordering countries
+- then exports that name of the countries that has the same name
