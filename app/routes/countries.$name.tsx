@@ -1,6 +1,6 @@
 import { json, LoaderFunctionArgs } from "@remix-run/node"
-import { Outlet, useLoaderData } from "@remix-run/react";
-
+import { useLoaderData } from "@remix-run/react";
+import Border from "./countries.$name.border";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   const response = await fetch(`https://restcountries.com/v3.1/name/${params.name}/?fields=name,capital,currencies,languages,subregion,borders,population,tld,region,flags,cca3`);
@@ -52,6 +52,7 @@ const Idkname = () => {
   const nativename = geoplace.name.nativeName;
   const currency = Object.values(geoplace.currencies);
   const language = Object.values(geoplace.languages);
+  
 
 
   return (
@@ -106,7 +107,7 @@ const Idkname = () => {
               </tr>
             </tbody>
           </table>
-          <Outlet context={{ geoplace }} />
+          <Border />
         </div>
 
       </div>
