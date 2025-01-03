@@ -16,18 +16,13 @@ export const loader = async () => {
     cca3: string;
     borders: string[];
   }[] = await responses.json();
-  // console.log(bordersDate);
 
   return json({ countriesBorder: bordersdate });
 }
 
 
 
-
-
-
-export default function Border() {
-
+const Border = () => {
   type dataFromCountries = {
     geoplace: {
       flags: {
@@ -63,13 +58,19 @@ export default function Border() {
       population: number
     }
   }
+
+
   const matches = useMatches()
+
   const useDataFound = matches.find(match => match.id === "routes/countries.$name")?.data as dataFromCountries;
-
-  const borders = Object.values(useDataFound.geoplace.borders);
-  console.log(borders);
-
+  // console.log(useDataFound.geoplace);
+  
   const { countriesBorder } = useLoaderData<typeof loader>();
+  // console.log(`toooo ${countriesBorder}`);
+  
+  const borders = Object.values(useDataFound.geoplace.borders);
+  // console.log({borders});
+
 
   const neighboringCountryNames = borders.map(borderCode => {
     const match = countriesBorder.find(country => country.cca3 === borderCode);
@@ -80,8 +81,11 @@ export default function Border() {
   return (
     <div>
       <div className="borders">
+        {/* <p>kok</p> */}
         <p>{neighboringCountryNames.map((sideCountries, index) => <span key={sideCountries}>{sideCountries} {index < neighboringCountryNames.length - 1 ? ', ' : ''}</span >)}</p>
       </div>
     </div >
   );
 }
+
+export default Border

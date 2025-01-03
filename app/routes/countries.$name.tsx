@@ -1,6 +1,8 @@
 import { json, LoaderFunctionArgs } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react";
-import Border from "./countries.$name.border";
+import Border from "../components/border";
+import { loader as borderLoader } from "../components/border";
+// export { checking as loader };
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   const response = await fetch(`https://restcountries.com/v3.1/name/${params.name}/?fields=name,capital,currencies,languages,subregion,borders,population,tld,region,flags,cca3`);
@@ -38,10 +40,23 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
     population: number
 
   }[] = await response.json();
-  // console.log(countryname);
+const componentData = ({
+  childData: borderLoader,
+})
+const wellDone = await componentData.childData();
+const data = await wellDone.json(); // Assuming TypedResponse has a .json() method
+
+// Access the countriesBorder property
+const countriesBorder = data.countriesBorder;
+// console.log(countriesBorder);
 
 
-  return json({ geoplace: countryname[0] })
+
+
+
+  return json({ 
+    geoplace: countryname[0], countriesBorder
+    })
 
 }
 
@@ -49,15 +64,21 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 const Idkname = () => {
 
   const { geoplace } = useLoaderData<typeof loader>();
+  // console.log({countriesBorder});
+
+
   const nativename = geoplace.name.nativeName;
   const currency = Object.values(geoplace.currencies);
   const language = Object.values(geoplace.languages);
-  
+
+  /* This is concerning the border components,i am trying to bring it into this place, and make it function, re-evaluating stuffs */
+  // const {childData} = useLoaderData<typeof loader>()
+  // console.log({childData});
 
 
   return (
     <>
-      
+
       <div className="flex">
         <div className="class-1">
           <img src={geoplace.flags.svg} alt="" />

@@ -11,8 +11,8 @@ export const meta: MetaFunction = () => {
 
 export const loader = async () => {
   const response = await fetch('https://restcountries.com/v3.1/all?fields=name,flags,region,population,capital');
-    const county: {
-      name: {
+  const county: {
+    name: {
       common: string;
       official: string;
       nativeName?: {
@@ -46,24 +46,37 @@ export default function Index() {
 
   return (
     <>
-    <div className="searchBar">
-        <input type="text" onChange={(event) => {const makeSmall = event.target.value.toLowerCase(); console.log(makeSmall);
-         setSearch(makeSmall)}} placeholder="Search for a country" />
+      <div className="searchBar">
+        <input type="text" onChange={(event) => {
+          const makeSmall = event.target.value.toLowerCase();
+          setSearch(makeSmall)
+        }} placeholder="Search for a country" />
+        <select name="Filter by Region" id="selectRegion" onClick={(event) => {
+          const x = document.getElementById("selectRegion");
+          const kols = x?.children;
+          console.log(kols);
+          
+        }}>
+          <option value="Africa">Africa</option>
+          <option value="America">America</option>
+          <option value="Asia">Asia</option>
+          <option value="Oceania">Oceania</option>
+        </select>
       </div>
-    <ul>
-      {countries.filter((country) =>{
-       const capitalCity = country.capital.map((capitol) => {return capitol.toLowerCase()})        
-        return search.toLowerCase() === "" ? country : country.name.common.toLowerCase().includes(search) || capitalCity.includes(search)
-      }) .map(country => (
-        <Link to={`countries/${country.name.common}`} key={JSON.stringify(country)}>
-          <img src={country.flags.svg} alt={country.flags.alt} />
-          <p>{country.name.common}</p>
-          <p>Population: {country.population}</p>
-          <p>Region: {country.region}</p>
-          <p>Capital: {country.capital}</p>
-        </Link>
-      ))}
-    </ul>
+      <ul>
+        {countries.filter((country) => {
+          const capitalCity = country.capital.map((capitol) => { return capitol.toLowerCase() })
+          return search.toLowerCase() === "" ? country : country.name.common.toLowerCase().includes(search) || capitalCity.includes(search)
+        }).map(country => (
+          <Link to={`countries/${country.name.common}`} key={JSON.stringify(country)}>
+            <img src={country.flags.svg} alt={country.flags.alt} />
+            <p>{country.name.common}</p>
+            <p>Population: {country.population}</p>
+            <p>Region: {country.region}</p>
+            <p>Capital: {country.capital}</p>
+          </Link>
+        ))}
+      </ul>
     </>
   )
 }
