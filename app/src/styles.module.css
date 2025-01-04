@@ -1,0 +1,10 @@
+.flexBox{
+    width: 85%;
+    margin: auto;
+    height: 3rem;
+}
+.gridie{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 2rem;
+}
