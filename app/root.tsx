@@ -1,7 +1,6 @@
 import '@mantine/core/styles.css';
 import { ColorSchemeScript, MantineProvider } from '@mantine/core';
-import { Container} from "@mantine/core";
-import classes from '../src/styles.module.css'
+import './global.css'
 import {
   Links,
   Meta,

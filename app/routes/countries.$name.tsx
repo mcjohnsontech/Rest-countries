@@ -2,6 +2,7 @@ import { json, LoaderFunctionArgs } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react";
 import Border from "../components/border";
 import { loader as borderLoader } from "../components/border";
+import Header from "~/components/header";
 // export { checking as loader };
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
@@ -78,7 +79,7 @@ const Idkname = () => {
 
   return (
     <>
-
+      <Header />
       <div className="flex">
         <div className="class-1">
           <img src={geoplace.flags.svg} alt="" />

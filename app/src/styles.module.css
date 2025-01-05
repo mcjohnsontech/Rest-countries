@@ -1,10 +1,75 @@
-.flexBox{
-    width: 85%;
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+
+body{
+    font-family: "Nunito Sans", serif;
+}
+
+/* Header Component */
+.headerStart{
+    width: 90%;
+    height: inherit;
     margin: auto;
-    height: 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: "Nunito Sans", serif;
+    padding: 0;
+}
+
+.buttonToggle{
+    border: 0;
+    background: none;
+    width: initial;
+    span{
+        width: 6.5rem;
+        justify-content: space-between;
+    }
+}
+
+.buttonToggle:hover{
+    background: transparent;
+}
+.headerContainer{
+    box-shadow: -2px -3px 7px;
+    border-bottom-right-radius: 0.2rem;
+    border-bottom-left-radius: 0.2rem;
+}
+/* Header component stops */
+.flexBox{
+    width: 90%;
+    margin: auto;
+    height: 8rem;
+}
+.indexInput{
+    border: none;
+    box-shadow: 0px 0px 3px #9e9e9e73;
+    outline: none;
+    div{
+        margin-left: 1.2rem;
+        border: 0;
+    }
+    input{
+        padding-inline-start: 4rem;
+        border: 0;
+    }
+}
+.selectIndex{
+    border: none;
+    box-shadow: 0px 0px 3px #9e9e9e73;
+    outline: none;
+    color: hsl(200, 15%, 8%);
+}
+.selectIndex::placeholder{
+    color: hsl(200, 15%, 8%);
 }
 .gridie{
+    width: 90%;
+    margin: auto;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-gap: 2rem;
+}
+
+.listIndex{
+    padding: 0;
 }

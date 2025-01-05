@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Flex, Select, Input } from "@mantine/core";
 import classes from '../src/styles.module.css'
 import { IconSearch } from '@tabler/icons-react'
+import Header from "~/components/header";
 
 export const meta: MetaFunction = () => {
   return [
@@ -56,7 +57,7 @@ export default function Index() {
 
   return (
     <>
-
+      <Header />
       <Flex
         justify="space-between"
         align="center"
@@ -64,12 +65,15 @@ export default function Index() {
       >
 
         {/* <input type="text" onChange={} placeholder="Search for a country" /> */}
-        <Input placeholder="Search for a country" onChange={(event) => {
+        <Input size="md" w={400} fw="500" placeholder="Search for a country..." onChange={(event) => {
           const makeSmall = event.target.value.toLowerCase();
           setSearch(makeSmall)
-        }} width="300" leftSection={<IconSearch stroke={1} />} />
+        }} width="300" leftSection={<IconSearch stroke={2}/>} className={classes.indexInput}/>
 
         <Select
+        className={classes.selectIndex}
+        fw="500"
+        c="hsl(200, 15%, 8%)"
           label=""
           placeholder="Filter by Region"
           onChange={onOptionChangeHandler}
@@ -94,7 +98,7 @@ export default function Index() {
 
       </Flex>
       <div className={classes.gridie}>
-        <ul>
+        <ul className={classes.listIndex}>
           {countries.filter((country) => {
 
             const capitalCity = country.capital.map((capitol) => { return capitol.toLowerCase() })
@@ -102,14 +106,14 @@ export default function Index() {
           }).map(country => (
             <div key={country.name.common} className="kkkkk">
               <Link to={`countries/${country.name.common}`} key={JSON.stringify(country)}>
-              <img src={country.flags.svg} alt={country.flags.alt} />
-              <p>{country.name.common}</p>
-              <p>Population: {country.population}</p>
-              <p>Region: {country.region}</p>
-              <p>Capital: {country.capital}</p>
-            </Link>
+                <img src={country.flags.svg} alt={country.flags.alt} />
+                <p>{country.name.common}</p>
+                <p>Population: {country.population}</p>
+                <p>Region: {country.region}</p>
+                <p>Capital: {country.capital}</p>
+              </Link>
             </div>
-            
+
           ))}
         </ul>
       </div>
