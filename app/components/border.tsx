@@ -1,4 +1,7 @@
-import { json, useLoaderData, useMatches } from "@remix-run/react"
+import { json, useLoaderData, useMatches } from "@remix-run/react";
+import classes from "../src/styles.module.css";
+
+import { Group, Button, Text } from "@mantine/core";
 
 export const loader = async () => {
   const responses = await fetch(`https://restcountries.com/v3.1/all?fields=name,cca3,borders`);
@@ -64,10 +67,10 @@ const Border = () => {
 
   const useDataFound = matches.find(match => match.id === "routes/countries.$name")?.data as dataFromCountries;
   // console.log(useDataFound.geoplace);
-  
+
   const { countriesBorder } = useLoaderData<typeof loader>();
   // console.log(`toooo ${countriesBorder}`);
-  
+
   const borders = Object.values(useDataFound.geoplace.borders);
   // console.log({borders});
 
@@ -82,7 +85,17 @@ const Border = () => {
     <div>
       <div className="borders">
         {/* <p>kok</p> */}
-        <p>{neighboringCountryNames.map((sideCountries, index) => <span key={sideCountries}>{sideCountries} {index < neighboringCountryNames.length - 1 ? ', ' : ''}</span >)}</p>
+        <Group>
+        <Text fw="bold" display="inline-block">Border Countries</Text> 
+        {neighboringCountryNames.map((sideCountries) =>
+       
+            <Button key={sideCountries} bg="white" c="black" className={classes.shadow}>
+              {sideCountries} 
+              {/* {index < neighboringCountryNames.length - 1 ? ', ' : ''} */}
+            </Button>
+          )}
+          </Group>
+
       </div>
     </div >
   );

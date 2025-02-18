@@ -1,7 +1,8 @@
 import type { MetaFunction } from "@remix-run/node";
-import { json, Link, useLoaderData } from "@remix-run/react";
+import { json, useLoaderData } from "@remix-run/react";
+import { useNavigate } from "@remix-run/react";
 import { useState } from "react";
-import { Flex, Select, Input } from "@mantine/core";
+import { Flex, Select, Input, Card, Image, Text, Group, List, ListItem } from "@mantine/core";
 import classes from '../src/styles.module.css'
 import { IconSearch } from '@tabler/icons-react'
 import Header from "~/components/header";
@@ -47,6 +48,7 @@ export default function Index() {
   const { countries } = useLoaderData<typeof loader>();
   const [search, setSearch] = useState("");
   const [data, setData] = useState("");
+  const navigate = useNavigate()
 
   const onOptionChangeHandler = (event) => {
     setData(event);
@@ -54,6 +56,9 @@ export default function Index() {
       event
     );
   };
+
+
+  
 
   return (
     <>
@@ -68,12 +73,12 @@ export default function Index() {
         <Input size="md" w={400} fw="500" placeholder="Search for a country..." onChange={(event) => {
           const makeSmall = event.target.value.toLowerCase();
           setSearch(makeSmall)
-        }} width="300" leftSection={<IconSearch stroke={2}/>} className={classes.indexInput}/>
+        }} width="300" leftSection={<IconSearch stroke={2} />} className={classes.indexInput} />
 
         <Select
-        className={classes.selectIndex}
-        fw="500"
-        c="hsl(200, 15%, 8%)"
+          className={classes.selectIndex}
+          fw="500"
+          c="hsl(200, 15%, 8%)"
           label=""
           placeholder="Filter by Region"
           onChange={onOptionChangeHandler}
@@ -98,7 +103,7 @@ export default function Index() {
 
       </Flex>
       <div className={classes.gridie}>
-        <ul className={classes.listIndex}>
+        {/* <ul className={classes.listIndex}>
           {countries.filter((country) => {
 
             const capitalCity = country.capital.map((capitol) => { return capitol.toLowerCase() })
@@ -115,7 +120,41 @@ export default function Index() {
             </div>
 
           ))}
-        </ul>
+        </ul> */}
+        {countries.filter((country) => {
+
+          const capitalCity = country.capital.map((capitol) => { return capitol.toLowerCase() })
+          return (search.toLowerCase() === "" ? country : country.name.common.toLowerCase().includes(search) || capitalCity.includes(search)) && (data === "" ? country : country.region.includes(data) || capitalCity.includes(search))
+        }).map(country => (
+          <Card shadow="sm" padding="lg" radius="md" withBorder key={country.name.common} onClick={() =>navigate(`countries/${country.name.common}`)}>
+            <Card.Section >
+              <Image
+                src={country.flags.svg}
+                height={160}
+                alt={country.flags.alt}
+              />
+            </Card.Section>
+
+            <Group justify="space-between" mt="md" mb="xs">
+              <Text fw={500}>{country.name.common}</Text>
+              {/* <Badge color="pink">On Sale</Badge> */}
+            </Group>
+
+            {/* <Text size="sm" c="dimmed">
+            With Fjord Tours you can explore more of the magical fjord landscapes with tours and
+            activities on and around the fjords of Norway
+          </Text> */}
+            <List listStyleType="none">
+              <List.Item>Population: {country.population}</List.Item>
+              <ListItem>Region: {country.region}</ListItem>
+              <ListItem>Capital: {country.capital}</ListItem>
+            </List>
+
+            {/* <Button color="blue" fullWidth mt="md" radius="md">
+              Book classic tour now
+            </Button> */}
+          </Card>
+        ))}
       </div>
 
     </>

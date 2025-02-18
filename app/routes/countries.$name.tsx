@@ -3,7 +3,8 @@ import { useLoaderData } from "@remix-run/react";
 import Border from "../components/border";
 import { loader as borderLoader } from "../components/border";
 import Header from "~/components/header";
-// export { checking as loader };
+import { Flex, Text} from "@mantine/core";
+import classes from "../src/styles.module.css";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   const response = await fetch(`https://restcountries.com/v3.1/name/${params.name}/?fields=name,capital,currencies,languages,subregion,borders,population,tld,region,flags,cca3`);
@@ -41,23 +42,23 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
     population: number
 
   }[] = await response.json();
-const componentData = ({
-  childData: borderLoader,
-})
-const wellDone = await componentData.childData();
-const data = await wellDone.json(); // Assuming TypedResponse has a .json() method
+  const componentData = ({
+    childData: borderLoader,
+  })
+  const wellDone = await componentData.childData();
+  const data = await wellDone.json(); // Assuming TypedResponse has a .json() method
 
-// Access the countriesBorder property
-const countriesBorder = data.countriesBorder;
-// console.log(countriesBorder);
-
-
+  // Access the countriesBorder property
+  const countriesBorder = data.countriesBorder;
+  // console.log(countriesBorder);
 
 
 
-  return json({ 
+
+
+  return json({
     geoplace: countryname[0], countriesBorder
-    })
+  })
 
 }
 
@@ -80,8 +81,16 @@ const Idkname = () => {
   return (
     <>
       <Header />
-      <div className="flex">
-        <div className="class-1">
+      <Flex className="flex"
+        mih={50}
+        // bg="rgba(0, 0, 0, .3)"
+        gap="xl"
+        justify="space-evenly"
+        align="center"
+        direction="row"
+        wrap="wrap"
+        p="5rem">
+        <div className={classes.class1}>
           <img src={geoplace.flags.svg} alt="" />
         </div>
         <div className="class-2">
@@ -90,15 +99,15 @@ const Idkname = () => {
             <tbody>
               <tr>
                 {/* <td>Native Name: {`${Object.values(nativename)[0].common}`}</td> */}
-                <td>Native Name:{" "}
+                <td><Text fw="bold" display="inline-block">Native Name:</Text>{" "}
                   {nativename && Object.keys(nativename).length > 0
                     ? Object.values(nativename)[0]?.common || "N/A"
                     : "N/A"}</td>
-                <td>Top Level Domain: {geoplace.tld[0]}</td>
+                <td><Text fw="bold" display="inline-block">Top Level Domain:</Text> {geoplace.tld[0]}</td>
               </tr>
               <tr>
                 <td>{geoplace.population}</td>
-                <td>Currencies: {currency.length === 1 ? (
+                <td><Text fw="bold" display="inline-block">Currencies:</Text> {currency.length === 1 ? (
                   currency.map(moneytype => <span key={moneytype.name}>{moneytype.name}</span>)
                 ) : currency.length > 1 ? (
 
@@ -108,8 +117,8 @@ const Idkname = () => {
                 )}</td>
               </tr>
               <tr>
-                <td>Region: {geoplace.region}</td>
-                <td>Languages: {language.length === 1 ? (
+                <td><Text fw="bold" display="inline-block">Region:</Text> {geoplace.region}</td>
+                <td><Text fw="bold" display="inline-block">Languages:</Text> {language.length === 1 ? (
                   language.map(spoken => <span key={spoken}>{spoken}</span>)
                 ) : language.length > 1 ? (
 
@@ -120,19 +129,21 @@ const Idkname = () => {
                 </td>
               </tr>
               <tr>
-                <td>Sub Region: {geoplace.subregion}</td>
+                <td><Text fw="bold" display="inline-block">Sub Region:</Text> {geoplace.subregion}</td>
               </tr>
               <tr>
-                <td>Capital: {geoplace.capital.map(capitalstate => (
-                  <span key={capitalstate}>{capitalstate}</span>
-                ))}</td>
+                <td><Text fw="bold" display="inline-block">Capital:</Text>
+                  {geoplace.capital.map(capitalstate => (
+                    <span key={capitalstate}>{capitalstate}</span>
+                  ))}
+                </td>
               </tr>
             </tbody>
           </table>
           <Border />
         </div>
 
-      </div>
+      </Flex>
     </>
 
   );
