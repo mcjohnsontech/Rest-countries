@@ -6,6 +6,9 @@
 
 /** @type {import('eslint').Linter.Config} */
 module.exports = {
+  server: "./server.js",
+  serverBuildTarget: "netlify",
+  ignoredRouteFiles: ["**/.*"],
   root: true,
   parserOptions: {
     ecmaVersion: "latest",
